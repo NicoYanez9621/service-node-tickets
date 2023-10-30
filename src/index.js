@@ -1,7 +1,8 @@
+import { config } from "dotenv";
 import app from "./app.js";
 import { sequelize } from "./database/database.js";
-
-const puerto = process.env.PORT || 4000;
+config();
+const puerto = process.env.PORT;
 
 async function main() {
   try {
