@@ -8,15 +8,15 @@ const DATABASE_USER = process.env.DATABASE_USER;
 const DATABASE_PASS = process.env.DATABASE_PASS;
 
 // usar de manera Local
-export const sequelize = new Sequelize(
-  DATABASE_NAME,
-  DATABASE_USER,
-  DATABASE_PASS,
-  {
-    host: `${DATABASE_URL}`,
-    dialect: "postgres",
-  }
-);
+// export const sequelize = new Sequelize(
+//   DATABASE_NAME,
+//   DATABASE_USER,
+//   DATABASE_PASS,
+//   {
+//     host: `${DATABASE_URL}`,
+//     dialect: "postgres",
+//   }
+// );
 
 //usar cuando deploye
-// export const sequelize = new Sequelize(`${DATABASE_URL}`);
+export const sequelize = new Sequelize(`${DATABASE_URL}`);
