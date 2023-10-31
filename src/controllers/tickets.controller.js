@@ -28,12 +28,13 @@ export const getTicket = async (req, res) => {
 };
 
 export const createTickets = async (req, res) => {
-  const { firstName_ticket, lastName_ticket, state_ticket } = req.body;
+  const { firstName_ticket, lastName_ticket, state_ticket, user_id } = req.body;
   try {
     const newTicket = await Tickets.create({
       firstName_ticket,
       lastName_ticket,
       state_ticket,
+      user_id,
     });
     // console.log(newUser);
     res.json(newTicket);
@@ -44,12 +45,13 @@ export const createTickets = async (req, res) => {
 
 export const updateTicket = async (req, res) => {
   const { idTicket } = req.params;
-  const { firstName_ticket, lastName_ticket, state_ticket } = req.body;
+  const { firstName_ticket, lastName_ticket, state_ticket, user_id } = req.body;
   try {
     let ticketFind = await Tickets.findByPk(idTicket);
     ticketFind.firstName_ticket = firstName_ticket;
     ticketFind.lastName_ticket = lastName_ticket;
     ticketFind.state_ticket = state_ticket;
+    ticketFind.user_id = user_id;
     await ticketFind.save();
     res.json(ticketFind);
   } catch (error) {
