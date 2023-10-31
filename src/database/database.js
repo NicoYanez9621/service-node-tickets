@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import Sequelize from "sequelize";
 
 config();
+const DATABASE_URL = process.env.DATABASE_URL;
 
 export const sequelize = new Sequelize({
   host: `${DATABASE_URL}`,
