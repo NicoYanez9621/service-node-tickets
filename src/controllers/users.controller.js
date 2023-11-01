@@ -1,3 +1,4 @@
+import Tickets from "../models/Tickets.js";
 import Users from "../models/Users.js";
 
 export const getUsers = async (req, res) => {
@@ -22,6 +23,25 @@ export const getUser = async (req, res) => {
     !userFind
       ? res.status(404).json({ message: "Usuario no encontrado" })
       : res.json(userFind);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserTickets = async (req, res) => {
+  const { idUser } = req.params;
+  try {
+    const ticketsFind = await Tickets.findAll({
+      where: {
+        user_id: idUser,
+      },
+    });
+    // console.log(users);
+    !ticketsFind.length
+      ? res
+          .status(404)
+          .json({ message: "No se encontraron Tickets para este usuario." })
+      : res.json(ticketsFind);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
