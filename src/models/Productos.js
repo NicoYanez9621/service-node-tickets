@@ -1,21 +1,18 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
-const Tickets = sequelize.define(
-  "tickets",
+const Productos = sequelize.define(
+  "productos",
   {
-    id_ticket: {
+    id_producto: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    firstName_ticket: {
+    descripcion_producto: {
       type: DataTypes.STRING,
     },
-    lastName_ticket: {
-      type: DataTypes.STRING,
-    },
-    state_ticket: {
+    valor_producto: {
       type: DataTypes.STRING,
     },
   },
@@ -24,4 +21,4 @@ const Tickets = sequelize.define(
   }
 );
 
-export default Tickets;
+export default Productos;

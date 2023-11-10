@@ -1,13 +1,13 @@
 import express from "express";
-import usersRoutes from "./routes/users.routes.js";
-import ticketsRoutes from "./routes/tickets.routes.js";
+import remitosRoutes from "./routes/remitos.routes.js";
+import productosRoutes from "./routes/productos.routes.js";
 
 const app = express();
 
 //middlewares
 app.use(express.json());
 
-app.use("/api", usersRoutes);
-app.use("/api", ticketsRoutes);
+app.use("/api", remitosRoutes);
+app.use("/api", productosRoutes);
 
 export default app;
