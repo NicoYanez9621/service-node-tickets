@@ -1,6 +1,7 @@
 import express from "express";
 import remitosRoutes from "./routes/remitos.routes.js";
 import productosRoutes from "./routes/productos.routes.js";
+import proveedoresRoutes from "./routes/proveedores.routes.js";
 
 const app = express();
 
@@ -9,5 +10,6 @@ app.use(express.json());
 
 app.use("/api", remitosRoutes);
 app.use("/api", productosRoutes);
+app.use("/api", proveedoresRoutes);
 
 export default app;

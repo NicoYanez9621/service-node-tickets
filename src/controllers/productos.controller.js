@@ -50,7 +50,7 @@ export const updateProducto = async (req, res) => {
     productoFind.descripcion_producto = descripcion_producto;
     productoFind.valor_producto = valor_producto;
     productoFind.remito_id = remito_id;
-    await ticketFind.save();
+    await productoFind.save();
     res.json(productoFind);
   } catch (error) {
     res.status(500).json({ error: error.message });
