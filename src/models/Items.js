@@ -15,11 +15,6 @@ const Item = sequelize.define("item", {
   },
   remitoId: {
     type: DataTypes.INTEGER,
-    references: {
-      model: "remitos", // el nombre de tu tabla remitos
-      key: "id",
-    },
-    allowNull: false,
   },
 });
 
