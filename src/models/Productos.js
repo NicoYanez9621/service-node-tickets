@@ -4,16 +4,16 @@ import { sequelize } from "../database/database.js";
 const Productos = sequelize.define(
   "productos",
   {
-    id_producto: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    descripcion_producto: {
+    descripcion: {
       type: DataTypes.STRING,
     },
-    valor_producto: {
-      type: DataTypes.STRING,
+    stock: {
+      type: DataTypes.INTEGER,
     },
   },
   {
