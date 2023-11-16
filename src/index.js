@@ -7,7 +7,7 @@ const puerto = process.env.PORT;
 async function main() {
   try {
     await sequelize.sync({
-      force: true,
+      force: false,
     });
     app.listen(puerto);
     console.log(`Sevidor corriendo en el puerto: ${puerto}`);
