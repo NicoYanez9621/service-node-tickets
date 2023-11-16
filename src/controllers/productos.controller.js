@@ -15,7 +15,7 @@ export const getProducto = async (req, res) => {
   try {
     const productoFind = await Productos.findOne({
       where: {
-        id_producto: idProducto,
+        id: idProducto,
       },
     });
     // console.log(users);
@@ -28,12 +28,11 @@ export const getProducto = async (req, res) => {
 };
 
 export const createProductos = async (req, res) => {
-  const { descripcion_producto, valor_producto, remito_id } = req.body;
+  const { descripcion, stock } = req.body;
   try {
     const newProducto = await Productos.create({
-      descripcion_producto,
-      valor_producto,
-      remito_id,
+      descripcion,
+      stock,
     });
     // console.log(newUser);
     res.json(newProducto);
@@ -44,12 +43,11 @@ export const createProductos = async (req, res) => {
 
 export const updateProducto = async (req, res) => {
   const { idProducto } = req.params;
-  const { descripcion_producto, valor_producto, remito_id } = req.body;
+  const { descripcion, stock } = req.body;
   try {
     let productoFind = await Productos.findByPk(idProducto);
-    productoFind.descripcion_producto = descripcion_producto;
-    productoFind.valor_producto = valor_producto;
-    productoFind.remito_id = remito_id;
+    productoFind.descripcion = descripcion;
+    productoFind.stock = stock;
     await productoFind.save();
     res.json(productoFind);
   } catch (error) {
@@ -62,7 +60,7 @@ export const deleteProducto = async (req, res) => {
   try {
     await Productos.destroy({
       where: {
-        id_producto: idProducto,
+        id: idProducto,
       },
     });
     res.sendStatus(204);

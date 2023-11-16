@@ -1,20 +1,19 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import Productos from "./Productos.js";
+import Proveedores from "./Proveedores.js";
+import Item from "./Items.js";
 
 const Remitos = sequelize.define(
   "remitos",
   {
-    id_remito: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    firstNameEmisor_remito: {
-      type: DataTypes.STRING,
-    },
-    firstNameReceptor_remito: {
-      type: DataTypes.STRING,
+    fechaEmision: {
+      type: DataTypes.DATE,
     },
   },
   {
@@ -22,14 +21,9 @@ const Remitos = sequelize.define(
   }
 );
 
-Remitos.hasMany(Productos, {
-  foreignKey: "remito_id",
-  sourceKey: "id_remito",
-});
-
-Productos.belongsTo(Remitos, {
-  foreignKey: "remito_id",
-  targetId: "id_producto",
-});
+// En tu modelo Remitos
+Remitos.belongsTo(Proveedores, { foreignKey: "proveedorId" });
+Remitos.belongsToMany(Productos, { through: Item, foreignKey: "remitoId" });
+Productos.belongsToMany(Remitos, { through: Item, foreignKey: "productoId" });
 
 export default Remitos;
