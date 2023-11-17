@@ -95,6 +95,10 @@ export const createRemito = async (req, res) => {
       await remito.addProducto(producto, {
         through: { cantidad: item.cantidad, unidad: item.unidad },
       });
+
+      producto.stock = Number(producto.stock) + Number(item.cantidad);
+      console.log("producto.stock: ", producto.stock);
+      await producto.save();
     }
 
     // Asocia el remito al proveedor
