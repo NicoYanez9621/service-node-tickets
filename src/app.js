@@ -1,4 +1,5 @@
 import express from "express";
+const cors = require("cors");
 import remitosRoutes from "./routes/remitos.routes.js";
 import productosRoutes from "./routes/productos.routes.js";
 import proveedoresRoutes from "./routes/proveedores.routes.js";
@@ -7,6 +8,7 @@ const app = express();
 
 //middlewares
 app.use(express.json());
+app.use(cors());
 
 app.use("/api", remitosRoutes);
 app.use("/api", productosRoutes);
