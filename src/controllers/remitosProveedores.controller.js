@@ -207,8 +207,8 @@ export const deleteRemito = async (req, res) => {
     }
 
     // Elimina las relaciones con Productos y Proveedores
-    await remito.removeProductosProveedore(remito.productos);
-    await remito.setProveedoresProveedore(null);
+    await remito.removeProducto(remito.productos);
+    await remito.setProveedor(null);
     // Elimina el remito
     await remito.destroy();
 
