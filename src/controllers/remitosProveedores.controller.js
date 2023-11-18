@@ -13,7 +13,7 @@ export const getRemitosProveedores = async (req, res) => {
         },
         {
           model: ProductosProveedores,
-          as: "cliente",
+          as: "productos", // Usa el mismo alias que en tu asociación
           through: {
             model: ItemsProveedores,
             as: "item",
@@ -22,7 +22,33 @@ export const getRemitosProveedores = async (req, res) => {
       ],
     });
 
-    res.status(200).json(remitos);
+    const remitosFormateados = remitos.map((remito) => {
+      let remitoFormat = {
+        id: remito.id,
+        fechaEmision: remito.fechaEmision,
+        createdAt: remito.createdAt,
+        updatedAt: remito.updatedAt,
+        clienteId: remito.proveedorId, // Asegúrate de tener este campo
+        productos: remito.productos.map((producto) => {
+          return {
+            id: producto.id,
+            descripcion: producto.descripcion,
+            stock: producto.stock,
+            createdAt: producto.createdAt,
+            updatedAt: producto.updatedAt,
+            item: {
+              cantidad: producto.item.cantidad,
+              unidad: producto.item.unidad,
+            },
+          };
+        }),
+        cliente: remito.proveedor, // Asegúrate de tener este campo
+      };
+
+      return remitoFormat;
+    });
+
+    res.status(200).json(remitosFormateados);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -97,7 +123,7 @@ export const createRemitoProveedor = async (req, res) => {
 
       // Crea un nuevo item y asócialo al remito y al producto
       const newItem = await ItemsProveedores.create(item);
-      await remito.addProductosProveedore(producto, {
+      await remito.addProductos(producto, {
         through: { cantidad: item.cantidad, unidad: item.unidad },
       });
 
@@ -111,7 +137,7 @@ export const createRemitoProveedor = async (req, res) => {
     if (!proveedor) {
       return res.status(404).json({ error: "Cliente no encontrado" });
     }
-    await remito.setProveedoresProveedore(proveedor);
+    await remito.setProveedor(proveedor);
 
     res.status(201).json(remito);
   } catch (error) {
@@ -181,9 +207,8 @@ export const deleteRemito = async (req, res) => {
     }
 
     // Elimina las relaciones con Productos y Proveedores
-    await remito.removeProductos(remito.productos);
-    await remito.setProveedore(null);
-
+    await remito.removeProductosProveedore(remito.productos);
+    await remito.setProveedoresProveedore(null);
     // Elimina el remito
     await remito.destroy();
 

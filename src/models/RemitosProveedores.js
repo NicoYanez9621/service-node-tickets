@@ -21,14 +21,15 @@ const RemitosProveedores = sequelize.define(
   }
 );
 
-// En tu modelo Remitos
 RemitosProveedores.belongsTo(ProveedoresProveedores, {
   foreignKey: "clienteId",
+  as: "proveedor",
 });
 
 RemitosProveedores.belongsToMany(ProductosProveedores, {
   through: ItemsProveedores,
   foreignKey: "remitoProveedorId",
+  as: "productos", // Agrega un alias aquí
 });
 
 ProductosProveedores.belongsToMany(RemitosProveedores, {
