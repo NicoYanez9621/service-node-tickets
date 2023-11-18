@@ -54,35 +54,35 @@ export const getRemitosProveedores = async (req, res) => {
   }
 };
 
-export const getRemito = async (req, res) => {
-  try {
-    const { idRemito } = req.params;
+// export const getRemito = async (req, res) => {
+//   try {
+//     const { idRemito } = req.params;
 
-    // Obtén un solo remito con sus asociaciones
-    const remito = await RemitosProveedores.findByPk(idRemito, {
-      include: [
-        {
-          model: ProductosProveedores,
-          as: "productos",
-          through: { attributes: ["cantidad", "unidad"] },
-        },
-        {
-          model: ProveedoresProveedores,
-          as: "proveedore",
-        },
-      ],
-    });
+//     // Obtén un solo remito con sus asociaciones
+//     const remito = await RemitosProveedores.findByPk(idRemito, {
+//       include: [
+//         {
+//           model: ProductosProveedores,
+//           as: "productos",
+//           through: { attributes: ["cantidad", "unidad"] },
+//         },
+//         {
+//           model: ProveedoresProveedores,
+//           as: "proveedore",
+//         },
+//       ],
+//     });
 
-    // Verifica si el remito existe
-    if (!remito) {
-      return res.status(404).json({ error: "Remito no encontrado" });
-    }
+//     // Verifica si el remito existe
+//     if (!remito) {
+//       return res.status(404).json({ error: "Remito no encontrado" });
+//     }
 
-    res.status(200).json(remito);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     res.status(200).json(remito);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 // export const getRemitoProductos = async (req, res) => {
 //   const { idRemito } = req.params;
