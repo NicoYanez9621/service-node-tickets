@@ -1,18 +1,18 @@
 import { Router } from "express";
 import {
   getRemitosProveedores,
-  // createRemitoProveedor,
+  createRemitoProveedor,
   // updateRemito,
   deleteRemito,
-  getRemito,
+  // getRemito,
 } from "../controllers/remitosProveedores.controller.js";
 
 const router = Router();
 
 router.get("/remitos", getRemitosProveedores);
-// router.post("/remitos", createRemitoProveedor);
+router.post("/remitos", createRemitoProveedor);
 // router.put("/remitos/:idRemito", updateRemito);
 router.delete("/remitos/:idRemito", deleteRemito);
-router.get("/remitos/:idRemito", getRemito);
+// router.get("/remitos/:idRemito", getRemito);
 
 export default router;
