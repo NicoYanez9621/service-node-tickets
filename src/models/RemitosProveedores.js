@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import Productos from "./ProductosProveedores.js";
-import Proveedores from "./ProveedoresProveedores.js";
-import Item from "./ItemsProveedores.js";
+import ProductosProveedores from "./ProductosProveedores.js";
+import ProveedoresProveedores from "./ProveedoresProveedores.js";
+import ItemsProveedores from "./ItemsProveedores.js";
 
-const Remitos = sequelize.define(
+const RemitosProveedores = sequelize.define(
   "remitosProveedores",
   {
     id: {
@@ -22,8 +22,18 @@ const Remitos = sequelize.define(
 );
 
 // En tu modelo Remitos
-Remitos.belongsTo(Proveedores, { foreignKey: "proveedorId" });
-Remitos.belongsToMany(Productos, { through: Item, foreignKey: "remitoId" });
-Productos.belongsToMany(Remitos, { through: Item, foreignKey: "productoId" });
+RemitosProveedores.belongsTo(ProveedoresProveedores, {
+  foreignKey: "clienteId",
+});
 
-export default Remitos;
+RemitosProveedores.belongsToMany(ProductosProveedores, {
+  through: ItemsProveedores,
+  foreignKey: "remitoProveedorId",
+});
+
+ProductosProveedores.belongsToMany(RemitosProveedores, {
+  through: ItemsProveedores,
+  foreignKey: "productoProveedorId",
+});
+
+export default RemitosProveedores;

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
-  getRemitos,
-  createRemito,
+  getRemitosProveedores,
+  createRemitoProveedor,
   // updateRemito,
   deleteRemito,
   getRemito,
@@ -9,8 +9,8 @@ import {
 
 const router = Router();
 
-router.get("/remitos", getRemitos);
-router.post("/remitos", createRemito);
+router.get("/remitos", getRemitosProveedores);
+router.post("/remitos", createRemitoProveedor);
 // router.put("/remitos/:idRemito", updateRemito);
 router.delete("/remitos/:idRemito", deleteRemito);
 router.get("/remitos/:idRemito", getRemito);

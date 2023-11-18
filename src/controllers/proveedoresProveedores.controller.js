@@ -1,8 +1,8 @@
-import Proveedores from "../models/ProveedoresProveedores.js";
+import ProveedoresProveedores from "../models/ProveedoresProveedores.js";
 
 export const getProveedores = async (req, res) => {
   try {
-    const proveedores = await Proveedores.findAll();
+    const proveedores = await ProveedoresProveedores.findAll();
     // console.log(Proveedores);
     res.json(proveedores);
   } catch (error) {
@@ -13,7 +13,7 @@ export const getProveedores = async (req, res) => {
 export const getProveedor = async (req, res) => {
   const { idProveedor } = req.params;
   try {
-    const proveedorFind = await Proveedores.findOne({
+    const proveedorFind = await ProveedoresProveedores.findOne({
       where: {
         id: idProveedor,
       },
@@ -30,7 +30,7 @@ export const getProveedor = async (req, res) => {
 export const createProveedor = async (req, res) => {
   const { nombre, cuit, domicilio, mail, telefono } = req.body;
   try {
-    const newProveedor = await Proveedores.create({
+    const newProveedor = await ProveedoresProveedores.create({
       nombre,
       cuit,
       domicilio,
@@ -48,7 +48,7 @@ export const updateProveedor = async (req, res) => {
   const { idProveedor } = req.params;
   const { nombre, cuit, domicilio, mail, telefono } = req.body;
   try {
-    let proveedorFind = await Proveedores.findByPk(idProveedor);
+    let proveedorFind = await ProveedoresProveedores.findByPk(idProveedor);
     proveedorFind.nombre = nombre;
     proveedorFind.cuit = cuit;
     proveedorFind.domicilio = domicilio;
@@ -64,7 +64,7 @@ export const updateProveedor = async (req, res) => {
 export const deleteProveedor = async (req, res) => {
   const { idProveedor } = req.params;
   try {
-    await Proveedores.destroy({
+    await ProveedoresProveedores.destroy({
       where: {
         id: idProveedor,
       },

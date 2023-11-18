@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
-const Proveedores = sequelize.define(
+const ProductosProveedores = sequelize.define(
   "proveedoresProveedores",
   {
-    id: {
+    clienteId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -30,4 +30,4 @@ const Proveedores = sequelize.define(
   }
 );
 
-export default Proveedores;
+export default ProductosProveedores;

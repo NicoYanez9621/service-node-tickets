@@ -5,7 +5,7 @@ import {
   deleteProveedor,
   updateProveedor,
   getProveedor,
-} from "../controllers/proveedores.controller.js";
+} from "../controllers/proveedoresProveedores.controller.js";
 
 const router = Router();
 

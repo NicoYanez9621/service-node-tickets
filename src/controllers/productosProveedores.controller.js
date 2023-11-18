@@ -1,8 +1,8 @@
-import Productos from "../models/ProductosProveedores.js";
+import ProductosProveedores from "../models/ProductosProveedores.js";
 
 export const getProductos = async (req, res) => {
   try {
-    const productos = await Productos.findAll();
+    const productos = await ProductosProveedores.findAll();
     // console.log(productos);
     res.json(productos);
   } catch (error) {
@@ -13,7 +13,7 @@ export const getProductos = async (req, res) => {
 export const getProducto = async (req, res) => {
   const { idProducto } = req.params;
   try {
-    const productoFind = await Productos.findOne({
+    const productoFind = await ProductosProveedores.findOne({
       where: {
         id: idProducto,
       },
@@ -27,10 +27,10 @@ export const getProducto = async (req, res) => {
   }
 };
 
-export const createProductos = async (req, res) => {
+export const createProductosProveedores = async (req, res) => {
   const { descripcion, stock } = req.body;
   try {
-    const newProducto = await Productos.create({
+    const newProducto = await ProductosProveedores.create({
       descripcion,
       stock,
     });
@@ -45,7 +45,7 @@ export const updateProducto = async (req, res) => {
   const { idProducto } = req.params;
   const { descripcion, stock } = req.body;
   try {
-    let productoFind = await Productos.findByPk(idProducto);
+    let productoFind = await ProductosProveedores.findByPk(idProducto);
     productoFind.descripcion = descripcion;
     productoFind.stock = stock;
     await productoFind.save();
@@ -58,7 +58,7 @@ export const updateProducto = async (req, res) => {
 export const deleteProducto = async (req, res) => {
   const { idProducto } = req.params;
   try {
-    await Productos.destroy({
+    await ProductosProveedores.destroy({
       where: {
         id: idProducto,
       },

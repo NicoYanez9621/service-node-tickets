@@ -1,21 +1,23 @@
-import Productos from "../models/ProductosProveedores.js";
-import Remitos from "../models/RemitosProveedores.js";
-import Proveedores from "../models/ProveedoresProveedores.js";
-import Item from "../models/ItemsProveedores.js";
+import ProductosProveedores from "../models/ProductosProveedores.js";
+import RemitosProveedores from "../models/RemitosProveedores.js";
+import ProveedoresProveedores from "../models/ProveedoresProveedores.js";
+import ItemsProveedores from "../models/ItemsProveedores.js";
 
-export const getRemitos = async (req, res) => {
+export const getRemitosProveedores = async (req, res) => {
   try {
-    // Obtén todos los remitos con sus asociaciones
-    const remitos = await Remitos.findAll({
+    const remitos = await RemitosProveedores.findAll({
       include: [
         {
-          model: Productos,
-          as: "productos",
-          through: { attributes: ["cantidad", "unidad"] },
+          model: ProveedoresProveedores,
+          as: "proveedor",
         },
         {
-          model: Proveedores,
-          as: "proveedore",
+          model: ProductosProveedores,
+          as: "cliente",
+          through: {
+            model: ItemsProveedores,
+            as: "item",
+          },
         },
       ],
     });
@@ -31,15 +33,15 @@ export const getRemito = async (req, res) => {
     const { idRemito } = req.params;
 
     // Obtén un solo remito con sus asociaciones
-    const remito = await Remitos.findByPk(idRemito, {
+    const remito = await RemitosProveedores.findByPk(idRemito, {
       include: [
         {
-          model: Productos,
+          model: ProductosProveedores,
           as: "productos",
           through: { attributes: ["cantidad", "unidad"] },
         },
         {
-          model: Proveedores,
+          model: ProveedoresProveedores,
           as: "proveedore",
         },
       ],
@@ -75,38 +77,41 @@ export const getRemito = async (req, res) => {
 //   }
 // };
 
-export const createRemito = async (req, res) => {
+export const createRemitoProveedor = async (req, res) => {
   try {
-    const { proveedorId, fechaEmision, items } = req.body;
+    const { clienteId, fechaEmision, items } = req.body;
 
     // Crea el remito
-    const remito = await Remitos.create({ proveedorId, fechaEmision });
+    const remito = await RemitosProveedores.create({
+      clienteId,
+      fechaEmision,
+    });
 
     // Itera sobre los elementos del array 'items'
     for (const item of items) {
       // Asegúrate de que el producto exista antes de asociarlo al remito
-      const producto = await Productos.findByPk(item.productoId);
+      const producto = await ProductosProveedores.findByPk(item.productoId);
       if (!producto) {
         return res.status(404).json({ error: "Producto no encontrado" });
       }
 
       // Crea un nuevo item y asócialo al remito y al producto
-      const newItem = await Item.create(item);
-      await remito.addProducto(producto, {
+      const newItem = await ItemsProveedores.create(item);
+      await remito.addProductosProveedore(producto, {
         through: { cantidad: item.cantidad, unidad: item.unidad },
       });
 
-      producto.stock = Number(producto.stock) + Number(item.cantidad);
+      producto.stock = Number(producto.stock) - Number(item.cantidad);
       // console.log("producto.stock: ", producto.stock);
       await producto.save();
     }
 
     // Asocia el remito al proveedor
-    const proveedor = await Proveedores.findByPk(proveedorId);
+    const proveedor = await ProveedoresProveedores.findByPk(clienteId);
     if (!proveedor) {
-      return res.status(404).json({ error: "Proveedor no encontrado" });
+      return res.status(404).json({ error: "Cliente no encontrado" });
     }
-    await remito.setProveedore(proveedor);
+    await remito.setProveedoresProveedore(proveedor);
 
     res.status(201).json(remito);
   } catch (error) {
@@ -168,7 +173,7 @@ export const deleteRemito = async (req, res) => {
     const { idRemito } = req.params;
 
     // Busca el remito por su clave primaria
-    const remito = await Remitos.findByPk(idRemito);
+    const remito = await RemitosProveedores.findByPk(idRemito);
 
     // Verifica si el remito existe
     if (!remito) {
