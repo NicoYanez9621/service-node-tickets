@@ -27,6 +27,7 @@ export const getRemitosProveedores = async (req, res) => {
         id: remito.id,
         fechaEmision: remito.fechaEmision,
         createdAt: remito.createdAt,
+        cuitEmisor: "34567893450",
         updatedAt: remito.updatedAt,
         clienteId: remito.proveedorId, // Asegúrate de tener este campo
         productos: remito.productos.map((producto) => {
