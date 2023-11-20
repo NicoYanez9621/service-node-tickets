@@ -15,7 +15,7 @@ export const getProveedor = async (req, res) => {
   try {
     const proveedorFind = await ProveedoresProveedores.findOne({
       where: {
-        id: idProveedor,
+        clienteId: idProveedor,
       },
     });
     // console.log(users);
@@ -66,7 +66,7 @@ export const deleteProveedor = async (req, res) => {
   try {
     await ProveedoresProveedores.destroy({
       where: {
-        id: idProveedor,
+        clienteId: idProveedor,
       },
     });
     // res.sendStatus(204);
