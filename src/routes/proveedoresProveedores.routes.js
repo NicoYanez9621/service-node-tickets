@@ -9,10 +9,10 @@ import {
 
 const router = Router();
 
-router.get("/proveedores", getProveedores);
-router.post("/proveedores", createProveedor);
-router.put("/proveedores/:idProveedor", updateProveedor);
-router.delete("/proveedores/:idProveedor", deleteProveedor);
-router.get("/proveedores/:idProveedor", getProveedor);
+router.get("/clientes", getProveedores);
+router.post("/clientes", createProveedor);
+router.put("/clientes/:idProveedor", updateProveedor);
+router.delete("/clientes/:idProveedor", deleteProveedor);
+router.get("/clientes/:idProveedor", getProveedor);
 
 export default router;
